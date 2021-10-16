@@ -1,5 +1,6 @@
 import { createApp as baseCreateApp } from 'vue'
 import App from './App.vue'
+import './styles/index.scss'
 
 import { boot } from './plugins'
 

@@ -28,6 +28,6 @@ export default defineComponent({
 
 <style lang="postcss">
 .yt-content {
-  @apply transition-all ease-in-out;
+  @apply transition-width ease-in-out;
 }
 </style>

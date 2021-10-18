@@ -16,7 +16,7 @@ export default defineComponent({
     },
     width: {
       type: Number,
-      default: 300,
+      default: 240,
     },
   },
   emits: ['update:modelValue'],
@@ -35,7 +35,6 @@ export default defineComponent({
 
     const style = computed(() => {
       return {
-        opacity: !model.value ? 0 : 1,
         height: convertNumberToPixel(drawer?.value.height || '100%'),
         width: convertNumberToPixel(innerWidth.value),
       }
@@ -54,7 +53,7 @@ export default defineComponent({
     watch(
       () => model.value,
       (value) => {
-        innerWidth.value = value ? props.width : 1
+        innerWidth.value = value ? props.width : 72
       }
     )
 
@@ -68,6 +67,6 @@ export default defineComponent({
 
 <style lang="postcss">
 .yt-drawer {
-  @apply transition-all ease-in-out border-r;
+  @apply transition-width ease-in-out border-r dark:bg-gray-700;
 }
 </style>

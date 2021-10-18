@@ -19,7 +19,16 @@ export function createStore() {
     mutations: {
       setDark(state, value: boolean) {
         state.dark = value
-        document.querySelector('body')?.classList.toggle('dark')
+
+        if (value) {
+          localStorage.setItem('space:dark', 'true')
+          document.querySelector('body')?.classList.add('dark')
+        }
+
+        if (!value) {
+          localStorage.removeItem('space:dark')
+          document.querySelector('body')?.classList.remove('dark')
+        }
       },
     },
   })

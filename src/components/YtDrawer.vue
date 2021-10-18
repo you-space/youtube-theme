@@ -67,7 +67,7 @@ export default defineComponent({
 
 <style lang="postcss">
 .yt-drawer {
-  @apply transition-width ease-in-out;
+  @apply transition-width transition-colors  ease-in-out;
   @apply border-r dark:border-transparent;
   @apply dark:bg-gray-800;
 }

@@ -5,14 +5,18 @@ import './styles/index.scss'
 import { boot } from './plugins'
 
 import { createRouter } from './router'
+import { createStore, key } from './store'
 
 async function createApp() {
   const app = baseCreateApp(App)
   const router = createRouter()
+  const store = createStore()
 
-  await boot({ app, router })
+  app.use(store, key)
 
   app.use(router)
+
+  await boot({ app, router, store })
 
   return app
 }

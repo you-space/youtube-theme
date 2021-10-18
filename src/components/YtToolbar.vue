@@ -43,7 +43,7 @@ export default defineComponent({
 <style lang="postcss">
 .yt-toolbar {
   @apply flex flex-wrap items-center w-full;
-  @apply border-b;
-  @apply dark:bg-gray-700;
+  @apply border-b dark:border-transparent;
+  @apply dark:bg-gray-800;
 }
 </style>

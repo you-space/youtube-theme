@@ -1,9 +1,16 @@
 <template>
   <yt-layout>
     <yt-toolbar>
-      <i class="material-icons px-6 cursor-pointer" @click="drawer = !drawer">menu</i>
+      <yt-icon class="px-6 cursor-pointer" name="menu" @click="drawer = !drawer" />
       <yt-img :src="logo.src" :alt="logo.alt" :height="20" />
-      <button @click="$store.commit('setDark', !$store.state.dark)">Toggle</button>
+
+      <div class="flex-1"></div>
+
+      <yt-icon
+        class="cursor-pointer px-6"
+        :name="!$store.state.dark ? 'light_mode' : 'dark_mode'"
+        @click="$store.commit('setDark', !$store.state.dark)"
+      />
     </yt-toolbar>
 
     <yt-drawer v-model="drawer"> links </yt-drawer>

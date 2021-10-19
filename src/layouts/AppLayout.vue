@@ -1,6 +1,6 @@
 <template>
   <router-view v-slot="{ Component, route }">
-    <component :is="getLayout(Component)">
+    <component :is="getLayout(Component)" v-if="Component">
       <component
         v-bind="$attrs"
         :is="Component"

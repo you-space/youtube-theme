@@ -59,7 +59,7 @@ export default defineComponent({
         label: 'Home',
         icon: 'home',
         to: {
-          name: 'home',
+          path: '/',
         },
       },
     ]

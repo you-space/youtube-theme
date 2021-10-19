@@ -25,7 +25,7 @@
     </yt-drawer>
 
     <yt-content class="bg-gray-100 h-full">
-      <router-view />
+      <slot />
     </yt-content>
   </yt-layout>
 </template>

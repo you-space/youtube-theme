@@ -29,6 +29,7 @@ export default defineComponent({
 <style lang="postcss">
 .yt-content {
   @apply transition-width transition-colors  ease-in-out;
+  @apply overflow-auto;
   @apply dark:bg-gray-700;
 }
 </style>

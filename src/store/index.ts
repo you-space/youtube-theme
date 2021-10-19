@@ -22,12 +22,12 @@ export function createStore() {
 
         if (value) {
           localStorage.setItem('space:dark', 'true')
-          document.querySelector('body')?.classList.add('dark')
+          document.querySelector('html')?.classList.add('dark')
         }
 
         if (!value) {
           localStorage.removeItem('space:dark')
-          document.querySelector('body')?.classList.remove('dark')
+          document.querySelector('html')?.classList.remove('dark')
         }
       },
     },

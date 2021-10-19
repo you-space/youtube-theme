@@ -1,11 +1,11 @@
 import { createApp as baseCreateApp } from 'vue'
 import App from './App.vue'
-import './styles/index.scss'
+import '@/styles/index.scss'
 
-import { boot } from './plugins'
+import { boot } from '@/plugins'
 
-import { createRouter } from './router'
-import { createStore, key } from './store'
+import { createRouter } from '@/router'
+import { createStore, key } from '@/store'
 
 async function createApp() {
   const app = baseCreateApp(App)

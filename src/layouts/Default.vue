@@ -8,12 +8,21 @@
 
       <yt-icon
         class="cursor-pointer px-6"
-        :name="!$store.state.dark ? 'light_mode' : 'dark_mode'"
+        :name="$store.state.dark ? 'light_mode' : 'dark_mode'"
         @click="$store.commit('setDark', !$store.state.dark)"
       />
     </yt-toolbar>
 
-    <yt-drawer v-model="drawer"> links </yt-drawer>
+    <yt-drawer v-model="drawer">
+      <yt-list>
+        <yt-item v-for="(link, index) in links" :key="index" :to="link.to">
+          <yt-icon class="mr-4" :name="link.icon" />
+          <span v-if="drawer">
+            {{ link.label }}
+          </span>
+        </yt-item>
+      </yt-list>
+    </yt-drawer>
 
     <yt-content class="bg-gray-100 h-full">
       <router-view />
@@ -47,7 +56,11 @@ export default defineComponent({
 
     const links = [
       {
-        text: 'Home',
+        label: 'Home',
+        icon: 'home',
+        to: {
+          name: 'home',
+        },
       },
     ]
 

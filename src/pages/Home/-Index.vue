@@ -2,9 +2,12 @@
   <div class="px-12 py-4">
     <div v-if="slide.current" class="flex flex-wrap justify-between">
       <div class="w-5/12 flex flex-wrap pr-4 pt-6">
-        <div class="w-full">
+        <div class="w-full overflow-auto" style="max-height: 350px">
           <h2 class="text-4xl font-bold mb-4">{{ slide.current.title }}</h2>
-          <p class="whitespace-pre-line leading-relaxed">{{ slide.current.description }}</p>
+          <p class="whitespace-pre-line leading-relaxed">
+            {{ slide.current.description.slice(0, 500) }}
+            {{ slide.current.description.length > 500 ? '...' : '' }}
+          </p>
         </div>
 
         <div class="w-full self-end">
@@ -40,12 +43,12 @@
         </div>
       </div>
 
-      <div class="w-6/12 flex justify-end relative">
+      <div class="w-5/12 flex justify-end relative" style="max-height: 350px">
         <yt-img
           :src="slide.current.thumbnail.src"
           :alt="slide.current.thumbnail.alt"
           class="object-cover w-full"
-          :height="350"
+          height="auto"
         />
         <div
           class="
@@ -123,9 +126,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import faker from 'faker'
+import space from 'space'
 
 export default defineComponent({
+  inheritAttrs: false,
   setup() {
     const slide = ref<any>({
       current: null,
@@ -135,39 +139,22 @@ export default defineComponent({
     const videos = ref<any[]>([])
 
     function setSlide() {
-      for (let i = 0; i < 4; i++) {
-        slide.value.items.push({
-          title: faker.name.title(),
-          thumbnail: {
-            src: faker.image.image(),
-            alt: faker.name.findName(),
-          },
-          description: faker.lorem.paragraphs(2),
-          tags: ['games', 'animes', 'gameplay'],
-          time: faker.datatype.number(59).toFixed(2).replace('.', ':'),
-        })
-      }
-
+      slide.value.items = videos.value
       slide.value.current = slide.value.items[0]
     }
 
-    function setVideos() {
-      for (let i = 0; i < 12; i++) {
-        videos.value.push({
-          title: faker.name.title(),
-          thumbnail: {
-            src: faker.image.image(),
-            alt: faker.name.findName(),
-          },
-          description: faker.lorem.paragraphs(1),
-          tags: ['games', 'animes', 'gameplay'],
-          time: faker.datatype.number(59).toFixed(2).replace('.', ':'),
-        })
-      }
+    async function setVideos() {
+      const request = await space.emit('item:index')
+
+      videos.value = request.data
     }
 
-    setSlide()
-    setVideos()
+    async function load() {
+      await setVideos()
+      setSlide()
+    }
+
+    load()
 
     return {
       slide,

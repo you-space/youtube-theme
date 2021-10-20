@@ -10,7 +10,19 @@
         <div class="w-full self-end">
           <div class="flex mb-8 mt-4">
             <div v-for="(tag, index) in slide.current.tags" :key="index" class="pr-2">
-              <div class="rounded-sm uppercase bg-red-500 text-white font-bold text-xs px-4 py-1">
+              <div
+                class="
+                  rounded-sm
+                  uppercase
+                  bg-red-500
+                  dark:bg-gray-800
+                  text-white
+                  font-bold
+                  text-xs
+                  px-4
+                  py-1
+                "
+              >
                 {{ tag }}
               </div>
             </div>
@@ -63,7 +75,7 @@
     <div class="my-8" />
 
     <div class="flex flex-wrap -mx-4">
-      <div class="w-full">
+      <div class="w-full mb-2">
         <h3 class="font-bold px-4 text-xl">Recommended</h3>
       </div>
       <div v-for="(video, index) in videos" :key="index" class="w-3/12 p-4">

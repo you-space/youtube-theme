@@ -1,0 +1,91 @@
+<template>
+  <div class="yt-video">
+    <div class="relative">
+      <yt-img
+        :src="video.thumbnail.src"
+        :alt="video.thumbnail.alt"
+        :height="imgHeight"
+        class="w-full object-cover"
+      />
+      <div v-if="video.duration" class="yt-video-time">
+        {{ convertDuration(video.duration) }}
+      </div>
+    </div>
+    <h2 v-if="!hideTitle" class="px-4 pt-4 text-lg font-bold mb-4">
+      #{{ video.id }} {{ video.title }}
+    </h2>
+    <p v-if="!hideDescription" class="px-4 whitespace-pre-line text-sm">
+      {{ video.description.slice(0, 150) }}
+      {{ video.description.length > 150 ? '...' : '' }}
+    </p>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import moment from 'moment'
+
+export default defineComponent({
+  props: {
+    video: {
+      type: Object,
+      required: true,
+    },
+    hideTitle: {
+      type: Boolean,
+      default: false,
+    },
+    hideDescription: {
+      type: Boolean,
+      default: false,
+    },
+    imgHeight: {
+      type: Number,
+      default: 200,
+    },
+  },
+  setup() {
+    function convertDuration(duration: string) {
+      const [hours, minutes, seconds] = [
+        moment.duration(duration).hours(),
+        moment.duration(duration).minutes().toString(),
+        moment.duration(duration).seconds().toString(),
+      ]
+
+      const result = []
+
+      if (hours) {
+        result.push(hours)
+      }
+
+      if (hours && minutes.length == 1) {
+        result.push(`0${minutes}`)
+      } else {
+        result.push(minutes)
+      }
+
+      result.push(seconds.length === 2 ? seconds : `0${seconds}`)
+
+      return result.join(':')
+    }
+    return {
+      convertDuration,
+    }
+  },
+})
+</script>
+
+<style lang="postcss">
+.yt-video {
+}
+
+.yt-video-time {
+  @apply absolute bottom-0 right-0;
+  @apply py-1 px-4;
+  @apply text-xs;
+  @apply mx-2 my-2;
+  @apply rounded-sm;
+  @apply opacity-80;
+  @apply bg-black text-white;
+}
+</style>

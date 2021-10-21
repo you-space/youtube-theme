@@ -14,21 +14,9 @@
           <div class="w-full self-end">
             <div class="flex mb-8 mt-4">
               <div v-for="(tag, index) in slide.current.tags" :key="index" class="pr-2">
-                <div
-                  class="
-                    rounded-sm
-                    uppercase
-                    bg-red-500
-                    dark:bg-gray-800
-                    text-white
-                    font-bold
-                    text-xs
-                    px-4
-                    py-1
-                  "
-                >
+                <yt-chip>
                   {{ tag }}
-                </div>
+                </yt-chip>
               </div>
             </div>
 
@@ -45,34 +33,13 @@
         </div>
 
         <div class="w-5/12 flex justify-end relative" style="max-height: 350px">
-          <yt-img
-            :src="slide.current.thumbnail.src"
-            :alt="slide.current.thumbnail.alt"
-            class="object-cover w-full"
-            height="auto"
+          <yt-video-card
+            :video="slide.current"
+            :img-height="350"
+            hide-title
+            hide-description
+            class="w-full hover:shadow-md"
           />
-          <div
-            class="
-              absolute
-              py-1
-              px-4
-              text-xs
-              mx-2
-              my-2
-              rounded-sm
-              bg-black
-              opacity-80
-              bottom-0
-              right-0
-              z-10
-              text-white
-            "
-          >
-            {{ slide.current.time }}
-          </div>
-          <div
-            class="absolute inset-0 bg-black opacity-40 hover:opacity-0 transition-opacity z-0"
-          ></div>
         </div>
       </div>
 
@@ -83,41 +50,11 @@
           <h3 class="font-bold px-4 text-xl">Recommended</h3>
         </div>
         <div v-for="(video, index) in videos" :key="index" class="w-3/12 p-4">
-          <div class="shadow bg-white dark:bg-gray-800" style="height: 400px">
-            <div class="relative">
-              <yt-img
-                :src="video.thumbnail.src"
-                :alt="video.thumbnail.alt"
-                :height="200"
-                class="w-full object-cover"
-              />
-              <div
-                class="
-                  absolute
-                  py-1
-                  px-4
-                  text-xs
-                  mx-2
-                  my-2
-                  rounded-sm
-                  bg-black
-                  opacity-80
-                  bottom-0
-                  right-0
-                  text-white
-                "
-              >
-                {{ video.time }}
-              </div>
-            </div>
-            <div class="p-4">
-              <h2 class="text-lg font-bold mb-4">#{{ video.id }} {{ video.title }}</h2>
-              <p class="whitespace-pre-line text-sm">
-                {{ video.description.slice(0, 150) }}
-                {{ video.description.length > 150 ? '...' : '' }}
-              </p>
-            </div>
-          </div>
+          <yt-video-card
+            :video="video"
+            style="height: 400px"
+            class="shadow bg-white dark:bg-gray-800"
+          />
         </div>
       </div>
       <div class="w-full justify-center flex" style="height: 50px">

@@ -2,9 +2,10 @@
   "name": "youtube-theme",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --config vite.client.config.ts",
     "serve": "vite preview",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite --config vite.client.config.ts build",
+    "build:admin": "vue-tsc --noEmit && APP_MODE=admin vite --config vite.admin.config.ts build",
     "lint": "eslint --ext .ts,vue ."
   },
   "dependencies": {

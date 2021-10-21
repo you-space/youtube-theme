@@ -19,8 +19,12 @@ exports.start = async () => {
   await space.emit('page:store', {
     name: 'youtube-theme-settings',
     label: 'Theme settings',
-    filename: path.join(__dirname, 'admin', 'settings.vue'),
+    filename: path.join(__dirname, 'dist', 'admin', 'admin.es.js'),
   })
+
+  space.setHandler('youtube-theme:admin-css', () =>
+    fs.readFileSync(path.join(__dirname, 'dist', 'admin', 'style.css'), 'utf-8')
+  )
 }
 
 exports.render = async ({ url, headers }) => {

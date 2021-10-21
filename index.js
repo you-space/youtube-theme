@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const fs = require('fs')
@@ -12,6 +13,14 @@ function renderFile(name) {
   }
 
   return fs.readFileSync(filename, 'utf-8')
+}
+
+exports.start = async () => {
+  await space.emit('page:store', {
+    name: 'youtube-theme-settings',
+    label: 'Theme settings',
+    filename: path.join(__dirname, 'admin', 'settings.vue'),
+  })
 }
 
 exports.render = async ({ url, headers }) => {

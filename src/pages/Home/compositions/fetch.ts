@@ -3,6 +3,7 @@ import space from 'space'
 export interface Filter {
   page?: number
   limit?: number
+  id?: string
 }
 
 export interface Video {

@@ -15,8 +15,8 @@
       #{{ video.id }} {{ video.title }}
     </h2>
     <p v-if="!hideDescription" class="px-4 whitespace-pre-line text-sm w-full">
-      {{ video.description.slice(0, 150) }}
-      {{ video.description.length > 150 ? '...' : '' }}
+      {{ video.description.slice(0, 100) }}
+      {{ video.description.length > 100 ? '...' : '' }}
     </p>
 
     <div v-if="!hideDate" class="px-4 my-4 w-full text-xs self-end">

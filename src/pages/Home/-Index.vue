@@ -6,8 +6,8 @@
           <div class="w-full overflow-auto" style="max-height: 350px">
             <h2 class="text-4xl font-bold mb-4">{{ slide.current.title }}</h2>
             <p class="whitespace-pre-line leading-relaxed">
-              {{ slide.current.description.slice(0, 500) }}
-              {{ slide.current.description.length > 500 ? '...' : '' }}
+              {{ slide.current.description.slice(0, 400) }}
+              {{ slide.current.description.length > 400 ? '...' : '' }}
             </p>
           </div>
 
@@ -82,6 +82,7 @@
 </template>
 
 <script lang="ts">
+import { useStore } from '@/store'
 import { defineComponent, ref } from 'vue'
 import { fetchVideos, Video } from './compositions/fetch'
 
@@ -89,6 +90,7 @@ export default defineComponent({
   inheritAttrs: false,
   setup() {
     const loading = ref(false)
+    const store = useStore()
 
     const slide = ref({
       current: null as null | Video,
@@ -100,8 +102,12 @@ export default defineComponent({
     const lastPage = ref()
     const currentPage = ref(0)
 
-    function setSlide() {
-      slide.value.items = videos.value.slice(0, 3)
+    async function setSlide() {
+      const { data } = await fetchVideos({
+        id: store.state.slide.ids.join(','),
+      })
+
+      slide.value.items = data
       slide.value.current = slide.value.items[0]
     }
 
@@ -133,7 +139,10 @@ export default defineComponent({
 
     async function load() {
       await loadMoreVideos()
-      setSlide()
+
+      if (store.state.slide.enable && store.state.slide.ids.length) {
+        await setSlide()
+      }
     }
 
     load()

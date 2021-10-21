@@ -9,7 +9,10 @@ export interface Filter {
 export interface Video {
   id: number
   source_id: string
+  title: string
+  description: string
   src: string
+  tags: string[]
 }
 
 export interface ServerResponse<T = Record<string, string>> {

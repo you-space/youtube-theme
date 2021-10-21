@@ -1,12 +1,9 @@
 import { Store } from 'vuex'
-import { RootState } from './store';
+import { RootState } from './store/state'
 
 declare module '@vue/runtime-core' {
-  // declare your own store states
-  interface State extends RootState {}
-
   // provide typings for `this.$store`
   interface ComponentCustomProperties {
-    $store: Store<State>
+    $store: Store<RootState>
   }
 }

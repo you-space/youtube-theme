@@ -1,23 +1,27 @@
 <template>
   <div class="yt-video">
-    <div class="relative">
+    <div class="relative w-full" :style="`height: ${imgHeight}px`">
       <yt-img
         :src="video.thumbnail.src"
         :alt="video.thumbnail.alt"
-        :height="imgHeight"
+        height="100%"
         class="w-full object-cover"
       />
       <div v-if="video.duration" class="yt-video-time">
         {{ convertDuration(video.duration) }}
       </div>
     </div>
-    <h2 v-if="!hideTitle" class="px-4 pt-4 text-lg font-bold mb-4">
+    <h2 v-if="!hideTitle" class="px-4 pt-4 text-lg font-bold mb-4 w-full">
       #{{ video.id }} {{ video.title }}
     </h2>
-    <p v-if="!hideDescription" class="px-4 whitespace-pre-line text-sm">
+    <p v-if="!hideDescription" class="px-4 whitespace-pre-line text-sm w-full">
       {{ video.description.slice(0, 150) }}
       {{ video.description.length > 150 ? '...' : '' }}
     </p>
+
+    <div v-if="!hideDate" class="px-4 my-4 w-full text-xs self-end">
+      {{ formatDate(video.publishedAt) }}
+    </div>
   </div>
 </template>
 
@@ -36,6 +40,10 @@ export default defineComponent({
       default: false,
     },
     hideDescription: {
+      type: Boolean,
+      default: false,
+    },
+    hideDate: {
       type: Boolean,
       default: false,
     },
@@ -68,8 +76,13 @@ export default defineComponent({
 
       return result.join(':')
     }
+
+    function formatDate(date: string) {
+      return moment(date).fromNow()
+    }
     return {
       convertDuration,
+      formatDate,
     }
   },
 })
@@ -77,6 +90,7 @@ export default defineComponent({
 
 <style lang="postcss">
 .yt-video {
+  @apply flex flex-wrap;
 }
 
 .yt-video-time {

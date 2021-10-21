@@ -38,7 +38,23 @@
             :img-height="350"
             hide-title
             hide-description
+            hide-date
             class="w-full hover:shadow-md"
+          />
+        </div>
+      </div>
+
+      <div class="my-8" />
+
+      <div class="flex flex-wrap -mx-4">
+        <div class="w-full mb-2">
+          <h3 class="font-bold px-4 text-xl">Latest videos</h3>
+        </div>
+        <div v-for="(video, index) in videos.slice(0, 4)" :key="index" class="w-3/12 p-4">
+          <yt-video-card
+            :video="video"
+            style="height: 400px"
+            class="shadow bg-white dark:bg-gray-800"
           />
         </div>
       </div>
@@ -57,6 +73,7 @@
           />
         </div>
       </div>
+
       <div class="w-full justify-center flex" style="height: 50px">
         <yt-spin v-show="loading" :height="40" />
       </div>

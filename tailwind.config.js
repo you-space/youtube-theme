@@ -1,7 +1,7 @@
 const mode = process.env.APP_MODE
 
 module.exports = {
-  important: '#youtube-theme',
+  important: mode === 'admin' ? '#youtube-theme' : undefined,
   purge:
     mode === 'admin'
       ? ['./src/admin/*.{vue,js,ts,jsx,tsx}']

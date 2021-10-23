@@ -10,11 +10,13 @@ const pages = Object.entries(components)
       .replace('../pages', '')
       .replace(/index/i, '')
       .replace('.vue', '')
+      .replace(/_/g, ':')
       .toLowerCase()
 
     return {
       path,
       component,
+      props: true,
     }
   })
 

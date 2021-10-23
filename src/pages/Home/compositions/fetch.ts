@@ -4,6 +4,7 @@ export interface Filter {
   page?: number
   limit?: number
   id?: string
+  search?: string
 }
 
 export interface Video {

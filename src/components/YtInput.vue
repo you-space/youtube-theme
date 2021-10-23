@@ -1,9 +1,9 @@
 <template>
-  <label :class="['yt-input']" v-bind="$attrs">
+  <label :class="['yt-input', $attrs.class]" :style="$attrs.style">
     <div v-if="label" :class="`text-${innerColor} mb-2 font-bold`">{{ label }}</div>
 
     <input
-      v-model="model"
+      v-bind="inputAttrs"
       :class="`border-${innerColor} focus:border-${innerFocusColor}`"
       @change="validate"
     />
@@ -25,6 +25,7 @@ interface Rule {
 }
 
 export default defineComponent({
+  inheritAttrs: false,
   props: {
     modelValue: {
       type: [String, Number],
@@ -47,8 +48,8 @@ export default defineComponent({
       default: 'gray-800',
     },
   },
-  setup(props, { emit }) {
-    const inputs = inject<Ref<YtFormInput[]>>('form:inputs')
+  setup(props, { emit, attrs }) {
+    const inputs = inject<Ref<YtFormInput[]> | null>('form:inputs', null)
     const model = useModel(props, 'modelValue', emit)
 
     const message = ref('')
@@ -81,11 +82,19 @@ export default defineComponent({
       })
     }
 
+    const inputAttrs = {
+      ...attrs,
+      class: undefined,
+      style: undefined,
+    }
+
     return {
       message,
       model,
       innerColor,
       innerFocusColor,
+
+      inputAttrs,
 
       validate,
     }
@@ -95,6 +104,7 @@ export default defineComponent({
 <style lang="postcss">
 .yt-input {
   @apply flex flex-wrap;
+  @apply w-full;
 }
 
 .yt-input input {

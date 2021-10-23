@@ -94,7 +94,8 @@ export default defineComponent({
   .yt-autocomplete-items {
     @apply absolute top-full  z-10;
     @apply w-full max-h-80 overflow-auto;
-    @apply bg-white dark:bg-gray-700 border;
+    @apply bg-white dark:bg-gray-700;
+    @apply border dark:border-gray-900;
   }
 }
 </style>

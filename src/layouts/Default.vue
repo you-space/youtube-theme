@@ -26,7 +26,7 @@
               />
               <div>
                 <div class="text-sm font-bold">{{ item.title }}</div>
-                <div class="text-xs text-gray-600">{{ $moment(item.publishedAt).fromNow() }}</div>
+                <div class="text-xs">{{ $moment(item.publishedAt).fromNow() }}</div>
               </div>
             </yt-item>
           </template>

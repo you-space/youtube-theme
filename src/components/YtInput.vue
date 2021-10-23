@@ -2,17 +2,17 @@
   <label :class="['yt-input', $attrs.class]" :style="$attrs.style">
     <div v-if="label" :class="`text-${innerColor} mb-2 font-bold`">{{ label }}</div>
 
-    <input
-      v-bind="inputAttrs"
-      :class="`border-${innerColor} focus:border-${innerFocusColor}`"
-      @change="validate"
-    />
+    <slot name="input" :attrs="inputAttrs">
+      <input v-model="model" v-bind="inputAttrs" />
+    </slot>
 
     <template v-if="message">
       <div :class="`text-${innerColor}`" class="my-2">
         {{ message }}
       </div>
     </template>
+
+    <slot />
   </label>
 </template>
 <script lang="ts">
@@ -84,8 +84,9 @@ export default defineComponent({
 
     const inputAttrs = {
       ...attrs,
-      class: undefined,
+      class: `border-${innerColor.value} focus:border-${innerFocusColor.value}`,
       style: undefined,
+      onChange: validate,
     }
 
     return {

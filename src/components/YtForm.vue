@@ -20,8 +20,6 @@ export default defineComponent({
     function submit() {
       const isValid = inputs.value.every((input) => input.validate() === true)
 
-      console.log(isValid)
-
       if (isValid) {
         emit('submit')
       }

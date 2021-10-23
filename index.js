@@ -19,15 +19,22 @@ exports.start = async () => {
   await space.emit('page:store', {
     name: 'youtube-theme-settings',
     label: 'Theme settings',
-    filename: path.join(__dirname, 'dist', 'admin', 'admin.es.js'),
+    files: [
+      {
+        name: 'admin.js',
+        type: 'main',
+        filename: path.join(__dirname, 'dist', 'admin', 'admin.es.js'),
+      },
+      {
+        name: 'admin.css',
+        type: 'css',
+        filename: path.join(__dirname, 'dist', 'admin', 'style.css'),
+      }
+    ],
   })
-
-  space.setHandler('youtube-theme:admin-css', () =>
-    fs.readFileSync(path.join(__dirname, 'dist', 'admin', 'style.css'), 'utf-8')
-  )
 }
 
-exports.render = async ({ url, headers }) => {
+exports.render = async ({ url, response }) => {
   let file = url
 
   if (url === '/') {
@@ -35,20 +42,22 @@ exports.render = async ({ url, headers }) => {
   }
 
   if (url.includes('.js')) {
-    headers.set('Content-type', 'text/javascript')
+    response.type('text/javascript')
   }
 
   if (url.includes('.css')) {
-    headers.set('Content-type', 'text/css')
+    response.type('text/css')
   }
 
   if (url.includes('.svg')) {
-    headers.set('Content-type', 'image/svg+xml')
+    response.type('image/svg+xml')
   }
-
-  console.log(url)
 
   const content = renderFile(file)
 
-  return content || '404'
+  if (!content) {
+    return response.status(404).send('Not found')
+  }
+
+  return content
 }

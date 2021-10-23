@@ -1,25 +1,29 @@
 <template>
-  <div class="px-4">
-    <h2 style="margin-top: 0">Slide</h2>
+  <div class="flex">
+    <div class="w-6/12">
+      <h2 class="mt-0 mb-4 text-4xl font-bold">Slide</h2>
 
-    <y-form @submit="save">
-      <y-toggle v-model="enable" filled label="Enable slide" class="q-mb-md" />
-      <y-input v-model="ids" filled label="Video ids" class="q-mb-md" />
+      <yt-form @submit="save">
+        <yt-switch v-model="enable" label="Enable slide" class="mb-4" />
+        <yt-input v-model="ids" :rules="[rules.required]" label="Videos" class="mb-4" />
 
-      <y-btn type="submit" label="submit" :loading="loading" />
-    </y-form>
+        <yt-btn type="submit" label="submit" :loading="loading" />
+      </yt-form>
+    </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import space from 'space'
-import { ref, inject } from 'vue'
+import { ref } from 'vue'
 
 export default {
   setup() {
     const ids = ref('')
     const enable = ref(false)
     const loading = ref(false)
-    const notify = inject('notify')
+    const rules = {
+      required: (value: string) => !!value || 'Field required',
+    }
 
     const metaName = 'youtube-theme:settings:slide'
 
@@ -48,7 +52,7 @@ export default {
       await space
         .emit('meta:update', data)
         .then(() => {
-          notify.create('Settings updated')
+          alert('Settings updated')
           setSettings()
         })
         .catch((err) => {
@@ -61,6 +65,7 @@ export default {
     return {
       ids,
       enable,
+      rules,
       loading,
       save,
     }

@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import Settings from './admin/Settings.vue'
+import gc from './plugins/global-components'
 import space from 'space'
 
 export async function mount(element: HTMLElement) {
@@ -14,6 +15,8 @@ export async function mount(element: HTMLElement) {
   document.querySelector('head')?.appendChild(style)
 
   const app = createApp(Settings)
+
+  gc({ app })
 
   app.mount(element)
 }

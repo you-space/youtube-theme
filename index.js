@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs')
 
 function renderFile(name) {
-  const filename = path.join(__dirname, 'dist', name)
+  const filename = path.join(__dirname, 'dist', 'client', name)
 
   const exist = fs.existsSync(filename)
 
@@ -45,6 +45,8 @@ exports.render = async ({ url, headers }) => {
   if (url.includes('.svg')) {
     headers.set('Content-type', 'image/svg+xml')
   }
+
+  console.log(url)
 
   const content = renderFile(file)
 

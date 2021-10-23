@@ -7,6 +7,11 @@ export default defineConfig({
     outDir: 'dist/client',
     rollupOptions: {
       external: ['space'],
+      output: {
+        paths: {
+          space: '/api/v1/assets/space',
+        },
+      },
     },
   },
   server: {

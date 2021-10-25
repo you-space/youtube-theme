@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, SetupContext } from 'vue'
 
 export function convertNumberToPixel(value: number) {
   if (typeof value === 'string') {
@@ -8,14 +8,10 @@ export function convertNumberToPixel(value: number) {
   return `${value}px`
 }
 
-interface EmitFn {
-  (event: string, ...args: any[]): void
-}
-
-export function useModel<T = any>(props: Record<string, any>, name: string, emit: EmitFn) {
+export function useModel<T = any>(props: Record<string, any>, name: string, emit: any) {
   return computed<T>({
     get() {
-      return props[name]
+      return props[name] as any
     },
     set(value) {
       emit(`update:${name}`, value)

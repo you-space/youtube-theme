@@ -23,7 +23,7 @@
 <script lang="ts">
 import { useModel } from '@/compositions/helpers'
 import { defineComponent, ref, watch } from 'vue'
-import { pick } from 'lodash'
+import { pickBy } from 'lodash'
 
 export default defineComponent({
   inheritAttrs: false,
@@ -38,7 +38,7 @@ export default defineComponent({
     },
     items: {
       type: Array,
-      default: () => [],
+      default: () => [] as any[],
     },
     itemLabel: {
       type: String,
@@ -51,12 +51,15 @@ export default defineComponent({
   },
   setup(props, { emit, attrs }) {
     const model = useModel(props, 'modelValue', emit)
-    const innerSearch = useModel(props, 'search', emit)
+    const innerSearch = useModel<string>(props, 'search', emit)
     const showMenu = ref(false)
 
-    const inputAttrs: any = pick(attrs, ['placeholder', 'type', 'name', 'id', 'class'])
+    const inputAttrs: any = pickBy(
+      attrs,
+      (_, key) => !['modelValue', 'onUpdate:modelValue', 'onUpdate:search'].includes(key)
+    )
 
-    function getLabel(item: Record<string, any>) {
+    function getLabel(item: any) {
       if (typeof item === 'string') {
         return item
       }

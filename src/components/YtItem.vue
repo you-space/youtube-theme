@@ -34,7 +34,7 @@ export default defineComponent({
 
     const attrs = {
       class: classes,
-      activeClass: props.activeClass,
+      activeClass: props.to ? props.activeClass : undefined,
     }
 
     return {

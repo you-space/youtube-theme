@@ -1,5 +1,5 @@
 <template>
-  <label :class="['yt-input', $attrs.class]" :style="$attrs.style">
+  <label :class="['yt-input', $attrs.class]">
     <div v-if="label" :class="`text-${innerColor} mb-2 font-bold`">{{ label }}</div>
 
     <slot name="input" :attrs="inputAttrs">
@@ -16,6 +16,7 @@
   </label>
 </template>
 <script lang="ts">
+import { pick } from 'lodash'
 import { useModel } from '@/compositions/helpers'
 import { defineComponent, inject, PropType, Ref, ref } from 'vue'
 import { YtFormInput } from './YtForm.vue'
@@ -96,6 +97,7 @@ export default defineComponent({
       innerFocusColor,
 
       inputAttrs,
+      pick,
 
       validate,
     }

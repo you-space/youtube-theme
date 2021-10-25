@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import Settings from './admin/Settings.vue'
 import gc from './plugins/global-components'
+import momentPlugin from './plugins/moment'
 import space from 'space'
 
 export async function mount(element: HTMLElement) {
@@ -17,6 +18,8 @@ export async function mount(element: HTMLElement) {
   const app = createApp(Settings)
 
   gc({ app })
+
+  momentPlugin({ app })
 
   app.mount(element)
 }

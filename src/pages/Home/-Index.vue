@@ -103,8 +103,14 @@ export default defineComponent({
     const currentPage = ref(0)
 
     async function setSlide() {
+      const { enable, items } = store.state.slide
+
+      if (!enable || !items.length) {
+        return
+      }
+
       const { data } = await fetchVideos({
-        id: store.state.slide.ids.join(','),
+        id: items.map((item) => item.id).join(),
       })
 
       slide.value.items = data
@@ -139,10 +145,7 @@ export default defineComponent({
 
     async function load() {
       await loadMoreVideos()
-
-      if (store.state.slide.enable && store.state.slide.ids.length) {
-        await setSlide()
-      }
+      await setSlide()
     }
 
     load()

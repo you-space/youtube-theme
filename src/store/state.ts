@@ -1,8 +1,13 @@
+interface SlideItem {
+  id?: string
+  type: string
+}
+
 const state = {
   dark: false,
   slide: {
     enable: false,
-    ids: [],
+    items: [] as SlideItem[],
   },
 }
 

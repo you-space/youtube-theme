@@ -1,16 +1,22 @@
+<script setup lang="ts">
+import { defineProps, ref } from 'vue'
+
+defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
+})
+
+const dialog = ref(false)
+</script>
+
 <template>
   <div>video: {{ id }}</div>
-</template>
-<script lang="ts">
-import { defineComponent } from 'vue'
 
-export default defineComponent({
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-  },
-  setup() {},
-})
-</script>
+  <yt-btn label="show" @click="dialog = true" />
+
+  <yt-dialog v-model="dialog">
+    <div class="h-96 bg-white">content</div>
+  </yt-dialog>
+</template>

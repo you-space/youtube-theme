@@ -13,6 +13,9 @@ export interface Video {
   title: string
   description: string
   src: string
+  thumbnail: {
+    src: string
+  }
   tags: string[]
 }
 

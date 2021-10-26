@@ -19,7 +19,8 @@
       {{ video.description.length > 100 ? '...' : '' }}
     </p>
 
-    <div v-if="!hideDate" class="px-4 my-4 w-full text-xs self-end">
+    <div v-if="!hideFooter" class="px-4 my-4 w-full text-xs self-end">
+      {{ convertNumberToAbbreviatedString(video.viewCount) }} views -
       {{ formatDate(video.publishedAt) }}
     </div>
   </div>
@@ -28,6 +29,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import moment from 'moment'
+import { convertNumberToAbbreviatedString } from '@/compositions/helpers'
 
 export default defineComponent({
   props: {
@@ -43,7 +45,7 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    hideDate: {
+    hideFooter: {
       type: Boolean,
       default: false,
     },
@@ -81,6 +83,7 @@ export default defineComponent({
       return moment(date).fromNow()
     }
     return {
+      convertNumberToAbbreviatedString,
       convertDuration,
       formatDate,
     }

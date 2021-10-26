@@ -21,7 +21,7 @@
                 :video="item"
                 hide-title
                 hide-description
-                hide-date
+                hide-footer
                 :img-height="60"
               />
               <div>

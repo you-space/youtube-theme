@@ -38,7 +38,7 @@
             :img-height="350"
             hide-title
             hide-description
-            hide-date
+            hide-footer
             class="w-full hover:shadow-md"
           />
         </div>
@@ -50,7 +50,7 @@
         <div class="w-full mb-2">
           <h3 class="font-bold px-4 text-xl">Latest videos</h3>
         </div>
-        <div v-for="(video, index) in videos.slice(0, 4)" :key="index" class="w-3/12 p-4">
+        <div v-for="(video, index) in latest.items" :key="index" class="w-3/12 p-4">
           <yt-video-card
             :video="video"
             style="height: 400px"
@@ -65,7 +65,7 @@
         <div class="w-full mb-2">
           <h3 class="font-bold px-4 text-xl">Recommended</h3>
         </div>
-        <div v-for="(video, index) in videos" :key="index" class="w-3/12 p-4">
+        <div v-for="(video, index) in recommended.items" :key="index" class="w-3/12 p-4">
           <yt-video-card
             :video="video"
             style="height: 400px"
@@ -75,7 +75,7 @@
       </div>
 
       <div class="w-full justify-center flex" style="height: 50px">
-        <yt-spin v-show="loading" :height="40" />
+        <yt-spin v-show="recommended.loading" :height="40" />
       </div>
     </div>
   </yt-infinite-scroll>
@@ -97,7 +97,17 @@ export default defineComponent({
       items: [] as Video[],
     })
 
-    const videos = ref<Video[]>([])
+    const latest = ref({
+      loading: false,
+      items: [] as Video[],
+    })
+
+    const recommended = ref({
+      loading: false,
+      lastPage: null as number | null,
+      currentPage: 0,
+      items: [] as Video[],
+    })
 
     const lastPage = ref()
     const currentPage = ref(0)
@@ -117,21 +127,32 @@ export default defineComponent({
       slide.value.current = slide.value.items[0]
     }
 
-    async function addPage(page = 1) {
-      loading.value = true
+    async function setLatest() {
+      const { data } = await fetchVideos({
+        limit: 4,
+        orderBy: 'publishedAt',
+        orderDesc: true,
+      })
 
-      await fetchVideos({ page })
+      latest.value.items = data
+    }
+
+    async function addPage(page = 1) {
+      recommended.value.loading = true
+
+      await fetchVideos({ page, orderBy: 'viewCount', orderDesc: true })
         .catch((err) => {
           throw new Error(err)
         })
         .then(({ data, meta }) => {
-          videos.value = videos.value.concat(data)
-          currentPage.value = meta.current_page
-          lastPage.value = meta.last_page
+          recommended.value.items = [...recommended.value.items, ...data]
+
+          recommended.value.lastPage = meta.last_page
+          recommended.value.currentPage = meta.current_page
         })
 
       setTimeout(() => {
-        loading.value = false
+        recommended.value.loading = false
       }, 800)
     }
 
@@ -144,6 +165,7 @@ export default defineComponent({
     }
 
     async function load() {
+      await setLatest()
       await loadMoreVideos()
       await setSlide()
     }
@@ -153,7 +175,8 @@ export default defineComponent({
     return {
       loading,
       slide,
-      videos,
+      recommended,
+      latest,
       loadMoreVideos,
     }
   },

@@ -5,6 +5,8 @@ export interface Filter {
   limit?: number
   id?: string
   search?: string
+  orderBy?: string
+  orderDesc?: boolean
 }
 
 export interface Video {
@@ -28,7 +30,10 @@ export interface ServerResponse<T = Record<string, string>> {
 }
 
 export async function fetchVideos(filters?: Filter) {
-  const request = await space.emit('item:index', filters)
+  const request = await space.emit('item:index', {
+    type: 'youtube-videos',
+    ...filters,
+  })
 
   if (!request) {
     throw new Error('Error in space emit')
